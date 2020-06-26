@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const SALT_WORK_FACTOR = 10;
 
-interface IUser extends Document {
+export interface IUser extends Document {
   firstNama: string,
   lastName: string,
   age: number,
@@ -18,7 +18,7 @@ const userSchema = Schema({
   age: Number,
   document: String,
   email: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false},
 });
 
 userSchema.pre('save', function (next) {

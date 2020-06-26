@@ -3,7 +3,7 @@ import { Router } from 'express';
 import PlaceController from './controllers/PlaceController';
 import QueueController from './controllers/QueueController';
 import UserController from './controllers/UserController';
-import AuthConroller from './controllers/AuthController';
+import AuthController from './controllers/AuthController';
 
 const routes = Router();
 
@@ -21,6 +21,6 @@ routes.get('/queue/:placeId', QueueController.dequeue);
 routes.post('/queue', QueueController.enqueue);
 
 // AUTHENTICATION
-routes.post('/auth/signin', AuthConroller.signIn);
+routes.post('/auth/signin', AuthController.signIn);
 
 export default routes;
