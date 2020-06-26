@@ -1,6 +1,4 @@
-import { Schema, model, Document, Types } from 'mongoose';
-
-import User from './User';
+import { Schema, model, Document } from 'mongoose';
 
 interface IPlace extends Document {
   email: string,
@@ -17,7 +15,7 @@ const PlaceSchema = new Schema({
   cnpj: String, 
   queue: {
     type: [Schema.Types.ObjectId],
-    ref: 'users',
+    ref: 'User',
     default: [],
   },
 }, {

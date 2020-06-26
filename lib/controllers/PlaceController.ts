@@ -4,7 +4,10 @@ import Place from '../schemas/Place';
 
 class PlaceController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const places = await Place.find();
+    const places = await Place.find().populate({
+      path: 'queue',
+      model: 'User',
+    });
 
     return res.json(places);
   }
@@ -12,7 +15,11 @@ class PlaceController {
   public async get(req: Request, res: Response): Promise<Response> {
     const placeId = req.params.placeId;
 
-    const place = await Place.findById(placeId);
+    const place = await Place.findById(placeId).populate({
+      path: 'queue',
+      model: 'User',
+    });
+
 
     return res.json(place);
   }
