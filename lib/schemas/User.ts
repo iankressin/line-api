@@ -10,6 +10,9 @@ export interface IUser extends Document {
   document: string,
   email: string,
   password: string,
+  isPlace: boolean,
+  isPlaceAdmin: boolean,
+  placeId: Schema.Types.ObjectId,
 };
 
 const userSchema = Schema({
@@ -19,6 +22,19 @@ const userSchema = Schema({
   document: String,
   email: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true, select: false},
+  isPlace: Boolean,
+  isPlaceAdmin: {
+    type: Boolean,
+    required: function () {
+      return this.isPlace
+    },
+  },
+  placeId: {
+    type: Schema.Types.ObjectId,
+    required: function () {
+      return this.isPlace
+    },
+  },
 });
 
 userSchema.pre('save', function (next) {

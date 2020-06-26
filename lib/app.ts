@@ -1,4 +1,5 @@
 import express from 'express';
+import expressSession from 'express-session';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import routes from './routes';
@@ -11,6 +12,8 @@ class App {
 
     this.middlewares();
     this.database();
+    this.session();
+
     this.routes();
   }
 
@@ -31,6 +34,15 @@ class App {
       }
     );
   }
+
+  private session(): void {
+    this.express.use(expressSession({
+        secret: 'test',
+        resave: false,
+        saveUninitialized: true
+      })
+    )
+  };
 
   private routes(): void {
     this.express.use(routes);

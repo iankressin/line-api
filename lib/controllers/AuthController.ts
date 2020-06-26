@@ -8,6 +8,8 @@ class AuthController {
     const user = await this.checkUser(email, password);
     
     delete user.password;
+
+    request.session.user = user;
     
     return response.json(user);
   }

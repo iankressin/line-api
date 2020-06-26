@@ -5,7 +5,8 @@ import User from '../schemas/User';
 
 class QueueController {
   public async enqueue(req: Request, res: Response): Promise<Response> {
-    const { placeId, userId } = req.body;
+    const placeId = req.body.placeId;
+    const userId = req.session.user._id;
 
     const place = await Place.findById(placeId); 
 

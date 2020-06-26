@@ -13,6 +13,7 @@ const PlaceSchema = new Schema({
   name: String,
   state: String,
   cnpj: String, 
+  
   queue: {
     type: [Schema.Types.ObjectId],
     ref: 'User',

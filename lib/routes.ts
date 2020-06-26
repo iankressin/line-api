@@ -5,6 +5,8 @@ import QueueController from './controllers/QueueController';
 import UserController from './controllers/UserController';
 import AuthController from './controllers/AuthController';
 
+import AuthValidator from './validators/AuthValidator';
+
 const routes = Router();
 
 // PLACES
@@ -18,7 +20,7 @@ routes.post('/user', UserController.create);
 
 // QUEUE
 routes.get('/queue/:placeId', QueueController.dequeue);
-routes.post('/queue', QueueController.enqueue);
+routes.post('/queue', AuthValidator.isUserSignedIn, QueueController.enqueue);
 
 // AUTHENTICATION
 routes.post('/auth/signin', AuthController.signIn);
