@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
+    "dev": "nodemon --watch 'lib/' --exec \"ts-node lib/server.ts\" -e ts",
     "start": "nodemon ./dist/server.js",
     "prod": "npm run build && npm run start"
   },

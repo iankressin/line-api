@@ -14,6 +14,7 @@ class PlaceController {
 
   public async get(req: Request, res: Response): Promise<Response> {
     const placeId = req.params.placeId;
+    console.log(placeId);
 
     const place = await Place.findById(placeId).populate({
       path: 'queue',

@@ -3,7 +3,7 @@ import { Schema, model, Document } from 'mongoose';
 interface IPlace extends Document {
   email: string,
   name: string,
-  state: string,
+  state: boolean,
   cnpj: string,
   queue: Schema.Types.ObjectId[],
 }
@@ -11,7 +11,7 @@ interface IPlace extends Document {
 const PlaceSchema = new Schema({
   email: String,
   name: String,
-  state: String,
+  open: { type: Boolean, default: false},
   cnpj: String, 
   
   queue: {

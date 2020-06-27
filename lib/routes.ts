@@ -11,7 +11,7 @@ const routes = Router();
 
 // PLACES
 routes.get('/place', PlaceController.index);
-routes.get('/place/:id', PlaceController.index);
+routes.get('/place/:placeId', PlaceController.get);
 routes.post('/place', PlaceController.create);
 
 // USER
@@ -19,7 +19,7 @@ routes.get('/user', UserController.index);
 routes.post('/user', UserController.create);
 
 // QUEUE
-routes.get('/queue/:placeId', QueueController.dequeue);
+routes.get('/queue', AuthValidator.isUserOperator, QueueController.dequeue);
 routes.post('/queue', AuthValidator.isUserSignedIn, QueueController.enqueue);
 
 // AUTHENTICATION

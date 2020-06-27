@@ -7,6 +7,13 @@ class AuthValidator {
 
     next();
   }
+
+  public isUserOperator(request: Request, response: Response, next): void {
+    if(!request.session.user || !request.session.user.isPlace)
+      throw new Error('Not Authorized');
+
+    next();
+  }
 }
 
 export default new AuthValidator();

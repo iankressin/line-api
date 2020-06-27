@@ -14,14 +14,14 @@ class QueueController {
       throw new Error('Already enqueued');
     }
 
-    const position = place.queue.push(req.body.userId);
+    const position = place.queue.push(userId);
     const result = await place.save();
 
     return res.json({ position });
   }
 
   public async dequeue(req: Request, res: Response): Promise<Response> {
-    const placeId = req.params.placeId;
+    const placeId = req.session.user.placeId;
 
     const place = await Place.findById(placeId);
 
