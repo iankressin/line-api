@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+
 class AuthValidator {
   public isUserSignedIn(request: Request, response: Response, next): void {
     if (!request.session.user) {
@@ -8,7 +9,7 @@ class AuthValidator {
     next();
   }
 
-  public isUserOperator(request: Request, response: Response, next): void {
+  public isOperator(request: Request, response: Response, next): void {
     if(!request.session.user || !request.session.user.isPlace)
       throw new Error('Not Authorized');
 

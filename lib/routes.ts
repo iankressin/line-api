@@ -19,7 +19,7 @@ routes.get('/user', UserController.index);
 routes.post('/user', UserController.create);
 
 // QUEUE
-routes.get('/queue', AuthValidator.isUserOperator, QueueController.dequeue);
+routes.get('/queue', AuthValidator.isOperator, QueueController.dequeue);
 routes.post('/queue', AuthValidator.isUserSignedIn, QueueController.enqueue);
 
 // AUTHENTICATION
