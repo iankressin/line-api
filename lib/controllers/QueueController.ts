@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { io } from '../server';
 
 import Place from '../schemas/Place';
 import User from '../schemas/User';
@@ -17,7 +18,7 @@ class QueueController {
     const position = place.queue.push(userId);
     const result = await place.save();
 
-    return res.json({ position });
+    return res.json(result);
   }
 
   public async dequeue(req: Request, res: Response): Promise<Response> {
@@ -30,7 +31,10 @@ class QueueController {
 
     const next = await User.findById(userId);
 
-    return res.json({ next });
+    io.emit('next', next);
+    console.log(io.sockets.connected);
+
+    return res.json(next);
   }
 }
 

@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 const SALT_WORK_FACTOR = 10;
 
 export interface IUser extends Document {
-  firstNama: string,
+  firstName: string,
   lastName: string,
   age: number,
   document: string,
@@ -20,7 +20,11 @@ const userSchema = Schema({
   lastName: String,
   age: Number,
   document: String,
-  email: { type: String, required: true, index: { unique: true } },
+  email: {
+    type: String,
+    required: true,
+    index: { unique: true }
+  },
   password: { type: String, required: true, select: false},
   isPlace: Boolean,
   isPlaceAdmin: {
