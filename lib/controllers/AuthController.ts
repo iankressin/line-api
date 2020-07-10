@@ -21,8 +21,10 @@ class AuthController {
     if(!user)
       throw new Error('No user was found with the given email');
 
-
-    const passwordsMatch = user.comparePassword(password, (error, isMatch) => console.log(error, isMatch))
+    const passwordsMatch = user.comparePassword(
+      password,
+      (error, isMatch) => console.log(error, isMatch)
+    )
 
     return user;
   }
