@@ -12,7 +12,9 @@ class QueueController {
     const place = await Place.findById(placeId); 
 
     if (place.queue.includes(userId)) {
-      throw new Error('Already enqueued');
+      return res.status(500).send({
+        message: 'Você já está na fila.'
+      })
     }
 
     const position = place.queue.push(userId);
@@ -32,7 +34,6 @@ class QueueController {
     const next = await User.findById(userId);
 
     io.emit('next', next);
-    console.log(io.sockets.connected);
 
     return res.json(next);
   }
