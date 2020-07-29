@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch 'lib/' --exec \"ts-node lib/server.ts\" -e ts",
-    "start": "ts-node ./dist/server.js"
+    "start": "ts-node lib/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +22,8 @@
     "express-session": "^1.17.1",
     "mongoose": "^5.9.20",
     "nodemon": "^2.0.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "ts-node": "^8.10.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.4.0",
