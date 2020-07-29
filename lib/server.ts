@@ -6,6 +6,6 @@ const PORT = 8080
 
 const server = http.createServer(app);
 
-server.listen(PORT, () => console.log('Listening request'));
+server.listen(process.env.PORT || PORT, () => console.log('Listening request'));
 
 export const io = socketIo(server);
