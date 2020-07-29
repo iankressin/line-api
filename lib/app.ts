@@ -23,7 +23,7 @@ class App {
   }
 
   private database(): void {
-    const mongoUrl = 'mongodb+srv://admin:admin@cluster0-owhdh.mongodb.net/Queue?retryWrites=true&w=majority'
+    const mongoUrl = ''
 
     mongoose.connect(
       mongoUrl, 
