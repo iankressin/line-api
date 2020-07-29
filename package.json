@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --watch 'lib/' --exec \"ts-node lib/server.ts\" -e ts",
-    "start": "npm run build && node dist/server.js"
+    "start": "ts-node lib/server.ts -e ts"
   },
   "keywords": [],
   "author": "",
