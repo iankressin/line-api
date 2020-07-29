@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon --watch 'lib/' --exec \"ts-node lib/server.ts\" -e ts",
-    "start": "ts-node lib/server.ts"
+    "start": "npm run build && node dist/server.js"
   },
   "keywords": [],
   "author": "",
