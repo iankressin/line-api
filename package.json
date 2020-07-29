@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
     "dev": "nodemon --watch 'lib/' --exec \"ts-node lib/server.ts\" -e ts",
     "start": "ts-node ./dist/server.js"
   },
@@ -29,5 +28,6 @@
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "eslint": "^7.3.1"
-  }
+  },
+  "node": "12.16.3"
 }
