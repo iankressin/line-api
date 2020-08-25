@@ -47,7 +47,7 @@
 ```json
  {
 	"_id": "string",
-    "firstName": "string",
+        "firstName": "string",
 	"lastName": "string",
 	"birthdate": "date",
 	"email": "string",
@@ -183,22 +183,17 @@
 <details>
 <summary>Parameters</summary>
 
-*Request:* 
- 
-```json
-// The user id is not needed, once the user session is handled by the backend.
-
-{
-    "placeId": "string"
-}
-```
-
 *Response:*
 ```json
-{
-    "position": "number"
+ {
+	"_id": "string",
+        "firstName": "string",
+	"lastName": "string",
+	"birthdate": "date",
+	"email": "string",
+	"document": "number"
 }
-```    
+```
 </details> 
 
 <br>
@@ -222,7 +217,7 @@
 ```json
  {
 	"_id": "string",
-    "firstName": "string",
+        "firstName": "string",
 	"lastName": "string",
 	"birthdate": "date",
 	"email": "string",
