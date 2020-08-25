@@ -2,7 +2,7 @@ import app from './app';
 import socketIo from 'socket.io';
 import http from 'http';
 
-const PORT = 8080
+const PORT = 8080;
 
 const server = http.createServer(app);
 

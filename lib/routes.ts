@@ -4,6 +4,7 @@ import PlaceController from './controllers/PlaceController';
 import QueueController from './controllers/QueueController';
 import UserController from './controllers/UserController';
 import AuthController from './controllers/AuthController';
+import ReviewController from './controllers/ReviewController';
 
 import AuthValidator from './validators/AuthValidator';
 
@@ -24,5 +25,19 @@ routes.post('/queue', AuthValidator.isUserSignedIn, QueueController.enqueue);
 
 // AUTHENTICATION
 routes.post('/auth/signin', AuthController.signIn);
+
+// REVIEW
+routes.post('/review', AuthValidator.isUserSignedIn, ReviewController.create);
+routes.get('/review', AuthValidator.isOperator, ReviewController.list);
+routes.get(
+  '/review/groupedScores',
+  AuthValidator.isOperator,
+  ReviewController.groupedScores
+);
+routes.get(
+  '/review/groupedUsersByScore/:score',
+  AuthValidator.isOperator,
+  ReviewController.groupedUsersByScore
+);
 
 export default routes;

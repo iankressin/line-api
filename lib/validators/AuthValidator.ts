@@ -1,19 +1,22 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
 class AuthValidator {
   public isUserSignedIn(request: Request, response: Response, next): void {
     if (!request.session.user) {
       response.status(401);
-      response.json({ message: 'Você não está autenticado' })
-      throw new Error('Not Authorized');
+      response.json({ message: 'Youre not authenticated' });
+      throw new Error('Unauthorized');
     }
 
     next();
   }
 
   public isOperator(request: Request, response: Response, next): void {
-    if(!request.session.user || !request.session.user.isPlace)
+    if (!request.session.user || !request.session.user.isPlace) {
+      response.status(401);
+      response.json({ message: 'Youre not authenticated' });
       throw new Error('Not Authorized');
+    }
 
     next();
   }

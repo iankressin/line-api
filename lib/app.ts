@@ -6,7 +6,7 @@ import routes from './routes';
 
 class App {
   public express: express.Application;
-  
+
   constructor() {
     this.express = express();
 
@@ -23,26 +23,25 @@ class App {
   }
 
   private database(): void {
-    const mongoUrl = 'mongodb+srv://admin:admin@cluster0-owhdh.mongodb.net/Queue?retryWrites=true&w=majority'
+    const mongoUrl =
+      'mongodb+srv://admin:admin@cluster0-owhdh.mongodb.net/Queue?retryWrites=true&w=majority';
 
-    mongoose.connect(
-      mongoUrl, 
-      {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-      }
-    );
+    mongoose.connect(mongoUrl, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    });
   }
 
   private session(): void {
-    this.express.use(expressSession({
+    this.express.use(
+      expressSession({
         secret: 'test',
         resave: false,
-        saveUninitialized: true
+        saveUninitialized: true,
       })
-    )
-  };
+    );
+  }
 
   private routes(): void {
     this.express.use(routes);
