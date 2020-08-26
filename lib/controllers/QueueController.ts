@@ -9,16 +9,21 @@ class QueueController {
     const placeId = req.body.placeId;
     const userId = req.session.user._id;
 
-    const place = await Place.findById(placeId); 
+    const place = await Place.findById(placeId);
 
     if (place.queue.includes(userId)) {
       return res.status(500).send({
-        message: 'Você já está na fila.'
-      })
+        message: 'Você já está na fila.',
+      });
     }
 
     const position = place.queue.push(userId);
     const result = await place.save();
+
+    await User.update(
+      { _id: userId },
+      { $set: { lastTimeInQueue: new Date() } }
+    );
 
     return res.json(result);
   }
@@ -34,6 +39,11 @@ class QueueController {
     const next = await User.findById(userId);
 
     io.emit('next', next);
+
+    await User.update(
+      { _id: userId },
+      { $set: { lastTimeCalled: new Date() } }
+    );
 
     return res.json(next);
   }
