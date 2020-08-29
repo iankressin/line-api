@@ -39,5 +39,6 @@ routes.get(
   AuthValidator.isOperator,
   ReviewController.groupedUsersByScore
 );
+routes.get('/review/nps', AuthValidator.isOperator, ReviewController.nps);
 
 export default routes;

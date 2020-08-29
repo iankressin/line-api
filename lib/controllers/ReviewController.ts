@@ -21,7 +21,7 @@ class ReviewController {
   }
 
   public async groupedScores(request: Request, response: Response) {
-    const placeId = Types.ObjectId(request.session.user);
+    const placeId = Types.ObjectId(request['user'].placeId);
 
     const scores = await Review.aggregate([
       { $match: { place: placeId } },
@@ -38,7 +38,7 @@ class ReviewController {
 
   public async groupedUsersByScore(request: Request, response: Response) {
     const score = Number(request.params.score);
-    const placeId = Types.ObjectId(request.session.user.placeId);
+    const placeId = Types.ObjectId(request['user'].placeId);
 
     const users = await Review.aggregate([
       { $match: { score, place: placeId } },
@@ -54,6 +54,33 @@ class ReviewController {
     ]);
 
     response.json({ users });
+  }
+
+  public async nps(request: Request, response: Response) {
+    const placeId = Types.ObjectId(request['user'].placeId);
+    let promoters = 0,
+      neutrals = 0,
+      detractors = 0;
+
+    const reviews = await Review.find({ place: placeId });
+
+    reviews.forEach(review => {
+      if (review.score >= 9) promoters++;
+      if (review.score <= 6) detractors++;
+      if (review.score === 8 || review.score === 7) neutrals++;
+    });
+
+    const nps = (promoters - detractors) / reviews.length;
+
+    console.log(nps);
+
+    response.json({
+      promoters,
+      neutrals,
+      detractors,
+      total: reviews.length,
+      nps,
+    });
   }
 }
 

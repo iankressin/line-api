@@ -15,6 +15,7 @@ export interface IUser extends Document {
   lastTimeInQueue: Date;
   lastTimeCalled: Date;
   placeId: Schema.Types.ObjectId;
+  _doc: any;
 }
 
 const userSchema = Schema({
