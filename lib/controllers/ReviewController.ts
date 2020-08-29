@@ -72,8 +72,6 @@ class ReviewController {
 
     const nps = (promoters - detractors) / reviews.length;
 
-    console.log(nps);
-
     response.json({
       promoters,
       neutrals,
