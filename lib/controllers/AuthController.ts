@@ -15,7 +15,6 @@ class AuthController {
 
       delete user.password;
 
-      console.log('Doc >>> ', user);
       const token = jwt.sign({ ...user }, 'secret');
 
       return response.json({ ...user, token });

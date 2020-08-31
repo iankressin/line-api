@@ -11,6 +11,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   isPlace: boolean;
+  isOperator: boolean;
   isPlaceAdmin: boolean;
   lastTimeInQueue: Date;
   lastTimeCalled: Date;

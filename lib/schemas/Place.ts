@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IPlace extends Document {
+export interface IPlace extends Document {
   email: string;
   name: string;
   imagePath: string;
@@ -11,6 +11,8 @@ interface IPlace extends Document {
   city: string;
   stateOrProvince: string;
   queue: Schema.Types.ObjectId[];
+  avarageWaitingTime: number,
+  totalUses: number,
 }
 
 const PlaceSchema = new Schema(
@@ -24,7 +26,8 @@ const PlaceSchema = new Schema(
     address: String,
     city: String,
     stateOrProvince: String,
-
+    avarageWaitingTime: Number,
+    totalUses: Number,
     queue: {
       type: [Schema.Types.ObjectId],
       ref: 'User',

@@ -1,51 +1,93 @@
 import { Request, Response } from 'express';
-import { io } from '../server';
+import { Document } from 'mongoose';
 
-import Place from '../schemas/Place';
+import { io } from '../server';
 import User from '../schemas/User';
+import Place, { IPlace } from '../schemas/Place';
+import QueueProvider from '../providers/QueueProvider';
 
 class QueueController {
-  public async enqueue(req: Request, res: Response): Promise<Response> {
-    const placeId = req.body.placeId;
-    const userId = req.session.user._id;
+  private placeId: string;
+  private place: any;
+  private userId: string;
 
-    const place = await Place.findById(placeId);
+  public enqueue = async (request: Request, response: Response): Promise<Response> => {
+    this.placeId = request.body.placeId;
+    this.userId = request['user']._id;
 
-    if (place.queue.includes(userId)) {
-      return res.status(500).send({
-        message: 'Você já está na fila.',
-      });
+    this.place = await Place.findById(this.placeId);
+
+    if (!this.place) {
+      return this.sendError(response, 'Estabelecimento não encontrado');
     }
 
-    const position = place.queue.push(userId);
-    const result = await place.save();
+    if (this.place.queue.includes(this.userId)) {
+      return this.sendError(response, 'Voce ja esta na fila');
+    }
 
-    await User.update(
-      { _id: userId },
+    const position = this.place.queue.push(this.userId);
+    const result = await this.place.save();
+
+    await User.updateOne(
+      { _id: this.userId },
       { $set: { lastTimeInQueue: new Date() } }
     );
 
-    return res.json(result);
+    return response.json(result);
   }
 
-  public async dequeue(req: Request, res: Response): Promise<Response> {
-    const placeId = req.session.user.placeId;
+  public dequeue = async (request: Request, response: Response): Promise<Response> => {
+    this.placeId = request['user'].placeId;
+    console.log('Place Id: ', this.placeId);
+    this.place = await Place.findById(this.placeId);
+    console.log('Place: ', this.place);
 
-    const place = await Place.findById(placeId);
+    if (!this.place) {
+      return this.sendError(response, 'Estabelecimento não encontrado');
+    }
 
-    const userId = place.queue.shift();
-    await place.save();
+    this.userId = this.place.queue.shift();
 
-    const next = await User.findById(userId);
+    const nextUser = await User.findById(this.userId);
 
-    io.emit('next', next);
+    io.emit('next', nextUser);
 
-    await User.update(
-      { _id: userId },
+    await User.updateOne(
+      { _id: this.userId },
       { $set: { lastTimeCalled: new Date() } }
     );
 
-    return res.json(next);
+    nextUser.lastTimeCalled = new Date();
+
+    console.log('Next: ', nextUser);
+
+    const currentAvarage = Math.abs(
+      nextUser.lastTimeCalled - nextUser.lastTimeInQueue
+    );
+
+    this.place.avarageWaitingTime = QueueProvider.calculateAvarageWaiting(
+      currentAvarage,
+      this.place.avarageWaitingTime,
+      nextUser.totalUses,
+    );
+
+    if (!this.place.totalUses) {
+      this.place.totalUses = 1;
+    } else {
+      this.place.totalUses = this.place.totalUses + 1;
+    }
+
+    // this.place.totalUses ?
+    //   this.place.totalUses = 1 :
+    //   this.place.totalUses = this.place.totalUses + 1;
+
+    await this.place.save();
+
+    return response.json({ next: nextUser });
+  }
+
+  private sendError = (response: Response, message: string) => {
+    return response.status(500).json({ message });
   }
 }
 
