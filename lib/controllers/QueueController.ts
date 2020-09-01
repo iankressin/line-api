@@ -38,9 +38,7 @@ class QueueController {
 
   public dequeue = async (request: Request, response: Response): Promise<Response> => {
     this.placeId = request['user'].placeId;
-    console.log('Place Id: ', this.placeId);
     this.place = await Place.findById(this.placeId);
-    console.log('Place: ', this.place);
 
     if (!this.place) {
       return this.sendError(response, 'Estabelecimento não encontrado');
@@ -59,8 +57,6 @@ class QueueController {
 
     nextUser.lastTimeCalled = new Date();
 
-    console.log('Next: ', nextUser);
-
     const currentAvarage = Math.abs(
       nextUser.lastTimeCalled - nextUser.lastTimeInQueue
     );
@@ -76,10 +72,6 @@ class QueueController {
     } else {
       this.place.totalUses = this.place.totalUses + 1;
     }
-
-    // this.place.totalUses ?
-    //   this.place.totalUses = 1 :
-    //   this.place.totalUses = this.place.totalUses + 1;
 
     await this.place.save();
 

@@ -18,6 +18,11 @@ routes.post('/place', PlaceController.create);
 // USER
 routes.get('/user', UserController.index);
 routes.post('/user', UserController.create);
+routes.post(
+  '/user/offer',
+  AuthValidator.isUserSignedIn,
+  UserController.createOffer,
+);
 
 // QUEUE
 routes.get('/queue', AuthValidator.isOperator, QueueController.dequeue);

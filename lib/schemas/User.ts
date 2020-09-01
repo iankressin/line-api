@@ -9,8 +9,12 @@ export interface IUser extends Document {
   age: number;
   document: string;
   email: string;
+  phone: string,
+  discoverable: boolean,
   password: string;
   isPlace: boolean;
+  offering: object,
+  lookingFor: object,
   isOperator: boolean;
   isPlaceAdmin: boolean;
   lastTimeInQueue: Date;
@@ -23,9 +27,25 @@ const userSchema = Schema({
   firstName: String,
   lastName: String,
   age: Number,
+  phone: String,
   document: String,
   lastTimeInQueue: Date,
   lastTimeCalled: Date,
+  discoverable: Boolean,
+  offering: {
+    category: String,
+    title: String,
+    description: String,
+    tags: {
+      type: [String],
+    },
+  },
+  lookingFor: {
+    category: String,
+    title: String,
+    description: String,
+    tags: [String],
+  },
   email: {
     type: String,
     required: true,
