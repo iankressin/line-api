@@ -15,21 +15,49 @@ class UserController {
     return response.json(user);
   }
 
-  public async createOffer(request: Request, response: Response) {
+  public createOffer = async (request: Request, response: Response): Promise<Response> => { 
+    try {
+      const servicePayload = request.body;
+
+      await this.createService(servicePayload, request['user']._id, 'offer');
+
+      return response.status(204).send();
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ message: error.message });
+    }
+  }
+
+  public async createDemand(request: Request, response: Response) {
+      try {
+        const servicePayload = request.body;
+
+        await this.createService(servicePayload, request['user']._id, 'demand');
+
+        return response.status(204).send();
+      } catch (error) {
+        return response.status(500).json({ message: error.message });
+      }
+    return response.status(204).send();
+  }
+
+  // A service is either an offer or a demand
+  // TODO: create an interface for servicePayload
+  private async createService(servicePayload, userId: string, serviceType: string) {
     const {
       tags,
       title,
       category,
       description,
       discoverable,
-    } = request.body;
+    } = servicePayload;
   
     await User.updateOne(
-      { _id: request['user']._id },
+      { _id: userId },
       { 
         $set: {
           discoverable,
-          offering: {
+          [serviceType]: {
             category,
             title,
             description,
@@ -38,8 +66,6 @@ class UserController {
         },
       } 
     );
-    
-    return response.status(204).send();
   }
 }
 

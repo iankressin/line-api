@@ -13,8 +13,8 @@ export interface IUser extends Document {
   discoverable: boolean,
   password: string;
   isPlace: boolean;
-  offering: object,
-  lookingFor: object,
+  offer: object,
+  demand: object,
   isOperator: boolean;
   isPlaceAdmin: boolean;
   lastTimeInQueue: Date;
@@ -32,7 +32,7 @@ const userSchema = Schema({
   lastTimeInQueue: Date,
   lastTimeCalled: Date,
   discoverable: Boolean,
-  offering: {
+  offer: {
     category: String,
     title: String,
     description: String,
@@ -40,7 +40,7 @@ const userSchema = Schema({
       type: [String],
     },
   },
-  lookingFor: {
+  demand: {
     category: String,
     title: String,
     description: String,
