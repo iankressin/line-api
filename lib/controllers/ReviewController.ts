@@ -5,7 +5,7 @@ import Review from '../schemas/Reviews';
 
 class ReviewController {
   public async create(request: Request, response: Response) {
-    const userId = request.session.user._id;
+    const userId = request['user']._id;
     const { placeId, score } = request.body;
     const review = await Review.create({ user: userId, place: placeId, score });
 
@@ -13,7 +13,7 @@ class ReviewController {
   }
 
   public async list(request: Request, response: Response) {
-    const placeId = request.session.user.placeId;
+    const placeId = request['user'].placeId;
 
     const reviews = await Review.find({ place: placeId });
 
@@ -70,7 +70,7 @@ class ReviewController {
       if (review.score === 8 || review.score === 7) neutrals++;
     });
 
-    const nps = (promoters - detractors) / reviews.length;
+    const nps = Math.floor((promoters - detractors) / reviews.length);
 
     response.json({
       promoters,

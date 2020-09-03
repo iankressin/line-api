@@ -9,12 +9,12 @@ export interface IUser extends Document {
   age: number;
   document: string;
   email: string;
-  phone: string,
-  discoverable: boolean,
+  phone: string;
+  discoverable: boolean;
   password: string;
   isPlace: boolean;
-  offer: object,
-  demand: object,
+  offer: object;
+  demand: object;
   isOperator: boolean;
   isPlaceAdmin: boolean;
   lastTimeInQueue: Date;
@@ -36,9 +36,11 @@ const userSchema = Schema({
     category: String,
     title: String,
     description: String,
-    tags: {
-      type: [String],
-    },
+    tags: [
+      {
+        type: String,
+      },
+    ],
   },
   demand: {
     category: String,
