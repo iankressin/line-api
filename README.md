@@ -6,6 +6,7 @@
  - /place
  - /queue
  - /auth
+ - /review
 
 <br>
 
