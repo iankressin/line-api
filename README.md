@@ -1,5 +1,5 @@
 # Line API
- This API is a queue modeling and its main goal is to provide a way to already existing POS systems to quickly implement a virtual line for it's clients.
+ This API is a queue modeling and its main goal is to provide a way to already existing systems to quickly implement a virtual line for it's clients.
 ## Endpoints
 
  - /user
